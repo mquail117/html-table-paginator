@@ -1,13 +1,14 @@
 <head>
   <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
   <script src="js/paginateTable.js"></script>
-  <script src="js/filterTable.js"></script>
+  <script src="js/ready_functions.js"></script>
+  <script src="js/filterTable_rewritten.js"></script>
   <link rel="stylesheet" href="css/style.css"></link>    
 </head>
 
-<input type="text" id="filterValue" onkeyup="filterTable()" placeholder="Search table..">
+<input type="text" name="column_search" value="1" id="filter_input" onkeyup="filterTable()" placeholder="Search table..">
 
-<table id="table1">
+<table id="table_1">
     <tr><th>id</th><th>first_name</th><th>last_name</th><th>email</th><th>animal</th><th>proper_name</th><th>buzzword</th><th>job_title</th><th>department</th><th>company</th><th>date_hired</th></tr>
     <tr>
 			<td>1</td>
