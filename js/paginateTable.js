@@ -8,7 +8,6 @@ function paginateTable() {
     paginatorPrefix = '<span class="paginator">&nbsp;';
     paginatorSuffix = '</span>';
     
-    
     numRows = countTableRows(),
     numPages = calcPagesNeeded( numRows, rowsPerPage ),
     $tableRows = getTableRows();
