@@ -1,33 +1,41 @@
-$(document).ready(function() {
+function paginateTable() {
     const rowsPerPage = 10;
-    var numRows = countTableRows();
-    var numPages = calcPagesNeeded( numRows, rowsPerPage );
-    var $tableRows = getTableRows();
+    paginatorClassId = 'paginator';
+    table = '#table_1'
+    $table = $('#table_1');
+    rowIdentifier = 'tr:has(td)';
+    $paginationContainer = $('<div id="paginationWrapper"></div>');
+    paginatorPrefix = '<span class="paginator">&nbsp;';
+    paginatorSuffix = '</span>';
     
-    appendPaginationElem( numPages );
+    
+    numRows = countTableRows(),
+    numPages = calcPagesNeeded( numRows, rowsPerPage ),
+    $tableRows = getTableRows();
+        
+    createPaginator( numPages );
     addPaginationMouseover();
     hideTableRows();
     showFirstPageRows( $tableRows, rowsPerPage );
     enablePagination( $tableRows , rowsPerPage );
-  });
-
+}
 function countTableRows() {
-    // count non-header table row elements
-    return $('#table1').find('tbody tr:has(td)').length;
+    return $($table).find(rowIdentifier).length;
 }
 function calcPagesNeeded( numRows, rowsPerPage ) {
-    // round up rows / rows per page
     return Math.ceil(numRows / rowsPerPage);
 }
-function appendPaginationElem( numPages ) {
-    var $paginationWrapper = $('<div id="paginationWrapper"></div>');
+function getTableRows() {
+    return $(rowIdentifier);
+}
+function createPaginator( numPages ) {
     for (i = 0; i < numPages; i++) {
-      $('<span class="pageNumber">&nbsp;' + (i + 1) + '</span>').appendTo($paginationWrapper);
+      $(paginatorPrefix + (i + 1) + paginatorSuffix).appendTo($paginationContainer);
     }
-    $paginationWrapper.appendTo('#table1');
+    $paginationContainer.appendTo(table);
 }
 function addPaginationMouseover() {
-    $('.pageNumber').hover(
+    $('.' + paginatorClassId).hover(
         function() {
           $(this).addClass('focus');
         },
@@ -36,11 +44,8 @@ function addPaginationMouseover() {
         }
       );
 }
-function getTableRows() {
-    return $('table tbody tr:has(td)');
-}
 function hideTableRows(){
-    $('table').find('tbody tr:has(td)').hide();
+    $(table).find(rowIdentifier).hide();
 }
 function showFirstPageRows( $tableRows , rowsPerPage ) {
     for (var i = 0; i <= rowsPerPage - 1; i++) {
@@ -48,8 +53,8 @@ function showFirstPageRows( $tableRows , rowsPerPage ) {
       }
 }
 function enablePagination( $tableRows , rowsPerPage ) {
-    $('span').click(function(event) {
-        $('#table1').find('tbody tr:has(td)').hide();
+    $('.' + paginatorClassId).click(function(event) {
+        $($table).find(rowIdentifier).hide();
         var nBegin = ($(this).text() - 1) * rowsPerPage;
         var nEnd = $(this).text() * rowsPerPage - 1;
         for (var i = nBegin; i <= nEnd; i++) {
